@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.BASE_URL ?? 'http://localhost:4173';
+const baseURL = process.env.BASE_URL ?? 'https://anthonyaelias.github.io/Playwright-Practice/';
 const webServerCommand = process.env.PLAYWRIGHT_WEB_SERVER_COMMAND;
 
 export default defineConfig({

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('opens the Playwright Practice Lab login page', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await expect(page).toHaveTitle('Playwright Practice Lab');
   await expect(page.getByTestId('login-page')).toBeVisible();
@@ -10,7 +10,7 @@ test('opens the Playwright Practice Lab login page', async ({ page }) => {
 });
 
 test('logs in with valid demo credentials', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   await page.getByTestId('email-input').fill('demo@example.com');
   await page.getByTestId('password-input').fill('playwright');
