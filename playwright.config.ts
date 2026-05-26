@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 const baseURL = process.env.BASE_URL ?? 'https://anthonyaelias.github.io/Playwright-Practice/';
 const webServerCommand = process.env.PLAYWRIGHT_WEB_SERVER_COMMAND;
+const demoViewport = { width: 1440, height: 1200 };
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -26,15 +27,15 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: { ...devices['Desktop Chrome'], viewport: demoViewport }
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
+      use: { ...devices['Desktop Firefox'], viewport: demoViewport }
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] }
+      use: { ...devices['Desktop Safari'], viewport: demoViewport }
     }
   ],
   webServer: webServerCommand

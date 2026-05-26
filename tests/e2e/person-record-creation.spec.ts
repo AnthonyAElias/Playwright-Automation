@@ -2,6 +2,10 @@ import { test, expect, type Page } from '@playwright/test';
 import { LoginPage } from '../../src/pages/login-page';
 import { demoUser } from '../../src/utils/test-data';
 
+const pauseForDemo = async (page: Page) => {
+  await page.waitForTimeout(2_500);
+};
+
 test('opens the Playwright Practice Lab login page', async ({ page }) => {
   const loginPage = new LoginPage(page);
 
@@ -51,22 +55,21 @@ async function loginAndGoToIntake(page: Page){
     await page.getByTestId('nav-intake').click();
 
     await expect(page.getByRole('heading', { name: 'Intake'})).toBeVisible();
-
-    await page.waitForTimeout(6_000);
 }
 
 
 
 test('creates a person record from Intake', async ({ page }) => {
   await loginAndGoToIntake(page);
+  await pauseForDemo(page);
 
   const uniqueId = Date.now();
 
   const person = {
-    firstName: 'TestFirst${uniqueId}',
-    lastName: 'TestLast${uniqueId}@example.com',
-    email: 'test.person.${uniqueId}@example.com',
-    address: '${uniqueId} Sample Lane',
+    firstName: `TestFirst${uniqueId}`,
+    lastName: `TestLast${uniqueId}`,
+    email: `test.person.${uniqueId}@example.com`,
+    address: `${uniqueId} Sample Lane`,
     ssn: Math.floor(100000000 + Math.random() * 900000000).toString(),
     psl: 'T1',
     applicantType: 'Contractor',
@@ -76,6 +79,8 @@ test('creates a person record from Intake', async ({ page }) => {
   // fill out fields
 
     await page.getByTestId('first-name-input').fill(person.firstName);
+    await pauseForDemo(page);
+
     await page.getByTestId('last-name-input').fill(person.lastName);
     await page.getByTestId('intake-email-input').fill(person.email);
     await page.getByTestId('address-input').fill(person.address);
@@ -84,12 +89,11 @@ test('creates a person record from Intake', async ({ page }) => {
     await page.getByTestId('applicant-type-select').selectOption(person.applicantType);
     await page.getByTestId('anticipated-start-date-input').fill(person.anticipatedStartDate);   
     await page.getByTestId('skip-applicant-intake-yes').check();
-
-
+    await pauseForDemo(page);
 
   // submit
     await page.getByTestId('submit-intake-button').click();
-
+    await pauseForDemo(page);
 
   // assert the person record was created
 
@@ -100,10 +104,11 @@ test('creates a person record from Intake', async ({ page }) => {
     await expect(createdPersonRow).toBeVisible();
     await expect(createdPersonRow).toContainText(person.firstName);
     await expect(createdPersonRow).toContainText(person.lastName);
+    await pauseForDemo(page);
 
     await createdPersonRow.click();
 
     await expect(page.getByTestId('workflow-status-value')).toBeVisible();
 
-    await page.waitForTimeout(6_000);
+    await pauseForDemo(page);
 });
