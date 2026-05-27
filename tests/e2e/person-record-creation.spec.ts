@@ -92,10 +92,10 @@ test('creates a person record from Intake', async ({ page }) => {
 
   // Submit
     await page.getByTestId('submit-intake-button').click();
-    await pauseForDemo(page);
 
   // Assert the person record was created
     await expect(page.getByText('Person record created')).toBeVisible();
+    await pauseForDemo(page);
 
     const createdPersonRow = page.getByTestId('person-record-1');
     await expect(createdPersonRow).toBeVisible();
