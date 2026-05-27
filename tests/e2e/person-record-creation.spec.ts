@@ -3,7 +3,7 @@ import { LoginPage } from '../../src/pages/login-page';
 import { demoUser } from '../../src/utils/test-data';
 
 const pauseForDemo = async (page: Page) => {
-  await page.waitForTimeout(2_500);
+  await page.waitForTimeout(3_500);
 };
 
 test('opens the Playwright Practice Lab login page', async ({ page }) => {
@@ -32,7 +32,6 @@ await loginPage.login(demoUser.email, demoUser.password);
 await loginPage.expectDashboardLoaded();
 
 // Find the Intake Link/button on the dashboard and click it.
-// Hint: try getByRole('link, { name : 'Intake'}) first
 
 await page.getByTestId('nav-intake').click();
 
@@ -76,7 +75,7 @@ test('creates a person record from Intake', async ({ page }) => {
     anticipatedStartDate: '2026-05-24'
 
   };
-  // fill out fields
+  // Fill out fields
 
     await page.getByTestId('first-name-input').fill(person.firstName);
     await pauseForDemo(page);
@@ -91,13 +90,11 @@ test('creates a person record from Intake', async ({ page }) => {
     await page.getByTestId('skip-applicant-intake-yes').check();
     await pauseForDemo(page);
 
-  // submit
+  // Submit
     await page.getByTestId('submit-intake-button').click();
     await pauseForDemo(page);
 
-  // assert the person record was created
-
-
+  // Assert the person record was created
     await expect(page.getByText('Person record created')).toBeVisible();
 
     const createdPersonRow = page.getByTestId('person-record-1');
